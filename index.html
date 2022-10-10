@@ -3,22 +3,34 @@
     <head>
         <title>Nilly | eToro API</title>
     </head>
-    <link rel="stylesheet" href="C:\Users\nillyal\Desktop\lush\odcod\eToroAPI\style.css">
+    <link rel="stylesheet" href="./style.css">
     
         
    <body>
        <!-- header -->
         <div id="header">
-            <div><img src="https://www.etoro.com/wp-content/uploads/2017/10/logo.svg?v=1" width="150px;"></div>
-            <span style="font-size: 14px; color:gray;">Created by Nilly Alfandary</span>
-            <!-- <span>What eToro has to offer?</span>
-            <br>
-            <span>Well, a lot!</span>  
-            <hr class="belowTitleHr"> -->
+            <div><a href="https://www.etoro.com/" target="_blank"><img src="https://www.etoro.com/wp-content/uploads/2017/10/logo.svg?v=1" width="150px;"></a></div>
+            <span style="font-size: 14px; color:gray;">API Demo created by Nilly Alfandary</span>
         </div>
 
-        <div id="data-area"></div>
+        <div id="data-area">
+            <div id="divCountInstruments">eToro offers <span id="spanInstToInvestNum"></span> instruments to invest in</div>
+            <div id="divCountInstrumentTypes">across <span id="spanInvestTypeNum"></span> asset classes</div>
+        </div>
+
+        <div id="selectAreaDiv">
+            <div id="selectDiv">Select the asset class to display all instruments in this category:</div>
+            <select id="selectInstType">
+                <option selected="true" disabled="true">Please choose...</option>
+
+            </select>
+            <button id="showInstrumentListBtn">
+                <span class="btnText">Yalla Balagn</span> 
+                
+            </button>
+        </div>
+            
         
    </body>
-   <script type="text/javascript" src="C:\Users\nillyal\Desktop\lush\odcod\eToroAPI\app.js"></script>
+   <script type="text/javascript" src="./app.js"></script>
 </html>

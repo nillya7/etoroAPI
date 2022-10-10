@@ -69,6 +69,12 @@ div {
 }
 
 
+/* data */
+
+#spanInstToInvestNum, #spanInvestTypeNum {
+    color: black;
+    font-weight: 900;
+}
 
 /* select */
 select {
@@ -119,6 +125,7 @@ select:hover {
     width: auto;
   }
   
+
   #showInstrumentListBtn:hover,
   #showInstrumentListBtn:focus {
     border-color: rgba(0, 0, 0, 0.15);
@@ -139,6 +146,7 @@ select:hover {
   }
 
 
+
   
 /* results */
 
@@ -157,7 +165,8 @@ select:hover {
     font-size: 25px;
     padding-bottom: 10px;
 }
-  /* table */
+
+/* table */
 
 table {
     margin: auto;
@@ -179,6 +188,8 @@ a:hover {
     color: #13c636;
 }
 
-a:visited, a:active {
+a:active {
     color: #000021;
 }
+
+
