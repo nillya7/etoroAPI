@@ -1,12 +1,10 @@
 // things to fix:
-// callback functions and restructure the code
-// remove stocks from being an optuin (or find a solution that won't crash the browser)
+// callback functions and restructure the code (based on functions)
+// remove stocks from being an option (or find a solution that won't crash the browser?)
 
 
 // things to add:
 // loader while the results are loading
-// on re-clicking: clear the results and create new one
-// infographic of all insturments and how many etoro has to offer (stocks 5000, indices 21 etc...)
 
 
 
@@ -72,16 +70,118 @@ function createEtoroSummary(data, uniqueInstTypesArray) {
             alert("this is going to crash!")
             }
     })
+
+    // create infographic based on instrument type
+    let currencyCount = 0;
+    let commoditiesCount = 0;
+    let indicesCount = 0;
+    let stocksCount = 0;
+    let etfCoount = 0;
+    let cryptoCount = 0;
+
+
+    for (let i=0 ; i<data.length ; i++) {
+        if(data[i].InstrumentTypeID === 1) {
+            currencyCount++
+        } else if(data[i].InstrumentTypeID === 2) {
+            commoditiesCount++
+        } else if(data[i].InstrumentTypeID === 4) {
+            indicesCount++
+        } else if(data[i].InstrumentTypeID === 5) {
+            stocksCount++
+        } else if(data[i].InstrumentTypeID === 10) {
+            cryptoCount++
+        } else if(data[i].InstrumentTypeID === 6) {
+            etfCoount++
+        } 
+        
+    }
+
+    let divInfoGraphicArea = document.createElement('div');
+    divInfoGraphicArea.classList.add('info-graphic')
+
+    // currency Count
+    let divCurrency = document.createElement('div');
+    divCurrency.classList.add('info-graphic-element')
+    divCurrency.classList.add('element-1')
+    divCurrency.innerText = currencyCount + " currencies"
+    divCurrency.style.width = currencyCount*2 + "px"
+    // divCurrency.style.height = currencyCount + "px"
+    divInfoGraphicArea.appendChild(divCurrency)
+
+     // commodities Count
+     let divCommodities = document.createElement('div');
+     divCommodities.classList.add('info-graphic-element')
+     divCommodities.classList.add('element-2')
+     divCommodities.innerText = commoditiesCount + " commodities"
+     divCommodities.style.width = commoditiesCount*2 + "px"
+    //  divCommodities.style.height = commoditiesCount/3 + "px"
+     divInfoGraphicArea.appendChild(divCommodities)
+
+    // indices Count
+    let divIndices = document.createElement('div');
+    divIndices.classList.add('info-graphic-element')
+    divIndices.classList.add('element-3')
+    divIndices.innerText = indicesCount + " indices"
+    divIndices.style.width = indicesCount*2.8 + "px"
+    // divIndices.style.height = indicesCount/10 + "px"
+    divInfoGraphicArea.appendChild(divIndices)
+     
+    // stocks Count
+    let divStocks = document.createElement('div');
+    divStocks.classList.add('info-graphic-element')
+    divStocks.classList.add('element-4')
+    divStocks.innerText = stocksCount + " stocks"
+    divStocks.style.width = stocksCount/5.1 + "px"
+    // divStocks.style.height = stocksCount/20 + "px"
+    divInfoGraphicArea.appendChild(divStocks)
+
+    // ETF Coount
+    let divEtf = document.createElement('div');
+    divEtf.classList.add('info-graphic-element')
+    divEtf.classList.add('element-5')
+    divEtf.innerText = etfCoount + " ETFs"
+    divEtf.style.width = etfCoount + "px"
+    // divEtf.style.height = etfCoount/10 + "px"
+    divInfoGraphicArea.appendChild(divEtf)
+
+    // Crypto Count
+    let divCrypto = document.createElement('div');
+    divCrypto.classList.add('info-graphic-element')
+    divCrypto.classList.add('element-6')
+    divCrypto.innerText = cryptoCount + " Cryptos"
+    divCrypto.style.width = cryptoCount + "px"
+    // divCrypto.style.height = cryptoCount/10 + "px"
+    divInfoGraphicArea.appendChild(divCrypto)
+
+     
+
+    divDataArea.appendChild(divInfoGraphicArea);
     
 
-    showInstrumentListBtn.addEventListener ('click', getInstrumentsBasedOnType);
+
+    showInstrumentListBtn.addEventListener ('click', activationOrRemove);
+
+    function activationOrRemove() {
+        // loader
+        let loaderDiv = document.createElement('div');
+        // loaderDiv.innerText = "loading";
+        selectAreaDiv.appendChild(loaderDiv)
+
+        let elementExists = document.getElementById("divResults"); 
+
+        if(elementExists === null) {
+            getInstrumentsBasedOnType();
+        } else { 
+            divResults.remove();
+            getInstrumentsBasedOnType();
+        }
+    }
+
     
     function getInstrumentsBasedOnType() {
         
-        // loader
-        // const loaderDiv = document.createElement('div');
-        // loaderDiv.innerText = "loading";
-        // document.body.appendChild(loaderDiv)
+        
 
 
         // get the instrument display name
@@ -148,6 +248,10 @@ function createEtoroSummary(data, uniqueInstTypesArray) {
             }
         }
         
+
+        // stop the loader
+        // loaderDiv.remove()
+
         //create rows in the table based on the user's selection
         //createDynamicTable(listOfInst, data, symbolFull, instrumentImageArray, tableOfInst, divResults)
 
@@ -160,10 +264,8 @@ function createEtoroSummary(data, uniqueInstTypesArray) {
                 aToInst.title = listOfInst[i];
                 aToInst.href = "https://www.etoro.com/markets/" + symbolFull[i];
                 aToInst.target = "_blank";
-
                 var link = document.createTextNode(listOfInst[i])
                 aToInst.appendChild(link)
-            
                 var tdInstName = document.createElement('td');
 
                 // image of the instument in another cell of the table
@@ -171,17 +273,38 @@ function createEtoroSummary(data, uniqueInstTypesArray) {
                 img.src = instrumentImageArray[i];
                 var tdImage = document.createElement('td');
                 tdImage.appendChild(img);
+
+
+                //trade btn
+                var tdBtn = document.createElement('td');
+                // const tradeBtn = document.createElement('button');
+                // // tradeBtn.innerHTML = "Add to Watchlist"
+                // tradeBtn.classList.add('tradeBtn')
+
+                var aAddWatchlist = document.createElement('a');
+                aAddWatchlist.href = "https://www.etoro.com/watchlists?action=add&items=" + symbolFull[i];
+                aAddWatchlist.target = "_blank";
+                aAddWatchlist.classList.add('tradeBtn');
+                var linkWatchlist = document.createTextNode("Add to Watchlist")
+                aAddWatchlist.appendChild(linkWatchlist);
+                
+                
+                tdBtn.appendChild(aAddWatchlist)
+                // tdBtn.appendChild(tradeBtn)
+
             }
 
             tr.appendChild(tdImage);
             tdInstName.appendChild(aToInst)
             tr.appendChild(tdInstName);
+            tr.appendChild(tdBtn)
             tableOfInst.appendChild(tr)
             divResults.appendChild(tableOfInst);
         }
     }    
 }
 
+// Create an array of instrument types
 function createArray(data, callback) {
     let instTypes = data.map(instTypes => instTypes.InstrumentTypeID)
     let instTypesArray = [];
@@ -190,6 +313,7 @@ function createArray(data, callback) {
     callback(data, uniqueInstTypesArray);
 }
 
+// create the dropdown of instrument types
 function createSelectOptions() {
     for (let i=0; i<instTypeObj.length; i++) {
         const optionInstType = document.createElement('option');
@@ -197,6 +321,7 @@ function createSelectOptions() {
         selectInstType.appendChild(optionInstType);
     }
 }
+
 
 
 
@@ -211,7 +336,7 @@ xhr.onreadystatechange = function() {
         console.log(data) 
         // console.log(data[1]) // specific instrument
         // console.log(data[1].SymbolFull)
-        // console.log(data[1].InstrumentTypeID) // 1 = currency | 2 Commodities |  3 | 4 Indices | 5 Stocks | 10 Crypto
+        // console.log(data[1].InstrumentTypeID) // 1 = currency | 2 Commodities | 4 Indices | 5 Stocks | 10 Crypto
         // console.log(data[1].InstrumentDisplayName)
         // console.log(data[1].IsInternalInstrument) // should be false
         // console.log(Object.values(data[1].Images[0])[3]) // image of specific instrument [1] place
